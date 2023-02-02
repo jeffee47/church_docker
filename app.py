@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import pymysql
 import json
 import traceback
@@ -22,12 +22,7 @@ def source_env(f=".env",keyfilter=[]):
             envdata[k] = v
     return envdata
 
-@app.route('/')
-def hello_world():
-     return 'This is a Python Flask Application with redis and accessed through Nginx'
-
-@app.route('/sermons')
-def sermons():
+def get_sermons_data():
     dbopts = source_env(".env",["user","password","host","db"])
     con = pymysql.connect(**dbopts)
     cursor = con.cursor()
@@ -53,23 +48,19 @@ def sermons():
             except Exception as e: 
                 #traceback.print_exc()
                 pass
-        return json.dumps(newrows)
+        return newrows
     except Exception as e:
         traceback.print_exc()
     finally:
         cursor.close()
         con.close()
-    return json.dumps([])
+    return []
 
-        
+@app.route('/')
+def hello_world():
+     return 'This is a Python Flask Application with redis and accessed through Nginx'
 
-#@app.route('/visitor')
-#def visitor():
-#     redis.incr('visitor')
-#     visitor_num = redis.get('visitor').decode("utf-8")
-#     return "Visit Number = : %s" % (visitor_num)
-#@app.route('/visitor/reset')
-#def reset_visitor():
-#    redis.set('visitor', 0)
-#    visitor_num = redis.get('visitor').decode("utf-8") 
-#    return "Visitor Count has been reset to %s" % (visitor_num)
+@app.route('/cgi-bin/sermons.py')
+def get_sermons():
+    sermons = get_sermons_data() 
+    return render_template('sermons.html',sermons=sermons)

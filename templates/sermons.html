@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head><title>Sermons</title></head>
+    <body>
+        <table border="yes" width="60%">
+            <tr>
+                <th>Title</th>
+                <th>Book</th>
+                <th>Link</th>
+                <th>Date</th>
+            </tr>
+        {% for tmprow in sermons %}
+            <tr>
+                <td>{{tmprow.title}}</td>
+                <td>{{tmprow.book}}</td>
+                <td>{{tmprow.link}}</td>
+                <td>{{tmprow.sermondate}}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </body>
+</html>
