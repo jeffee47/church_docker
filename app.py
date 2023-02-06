@@ -35,7 +35,22 @@ def get_sermons_data():
             try:
                 tmp = list(tmpdata)
                 tmpdate = tmp[-1].isoformat()
+                tmpdate = "%04d-%02d-%02d" % (tmp[-1].year,tmp[-1].month,tmp[-1].day)
+                if tmp[-1].hour < 15:
+                    tmpdate += " AM"
+                else:
+                    tmpdate += " PM"
                 tmp[-1] = tmpdate
+                href = ""
+                try:
+                    book,chapter = re.match(r'(.*?)\s+(\d+):', tmp[2]).groups()
+                    chapter = int(chapter)
+                    book = book.lower().strip()
+                    book = re.sub(r'\s+','-',book)
+                    href = "https://www.kingjamesbibleonline.org/%s-Chapter-%d/" % (book, chapter) 
+                except Exception as e:
+                    #traceback.print_exc()
+                    pass
                 ddata = {
 			'id' : tmp[0],
 			'title' : tmp[1],
@@ -43,6 +58,7 @@ def get_sermons_data():
 			'summary' : tmp[3],
 			'link' : tmp[4],
 			'sermondate' : tmp[5],
+			'href' : href,
                 }
                 newrows.append(ddata)
             except Exception as e: 

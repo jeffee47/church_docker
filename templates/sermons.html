@@ -1,20 +1,68 @@
-<!DOCTYPE html>
-<html>
-    <head><title>Sermons</title></head>
-    <body>
-        <table border="yes" width="60%">
-            <tr>
-                <th>Title</th>
-                <th>Book</th>
-                <th>Link</th>
-                <th>Date</th>
-            </tr>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+<title>Sermons</title>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="http://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js" type="text/javascript"></script>
+<!-- <script src="/jquery/dataTables.jqueryui.js" type="text/javascript"></script> -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/ju/dt-1.13.2/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/ju/dt-1.13.2/datatables.min.js"></script>
+<script type="text/javascript">//<![CDATA[
+
+                        $(document).ready(function() {
+                                $('#sermonstable').dataTable( {
+                                        "iDisplayLength" : 10
+                                });
+                                var table = $('#sermonstable').DataTable();
+                                table
+                                    .order( [ 0, 'desc' ] )
+                                    .draw();
+                        } );
+
+//]]></script>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body>
+<em>Click on the Date or Title hyperlink to listen to the sermon
+(it will open in a new tab/window).
+Click on the Passage hyperlink to open a new window to the
+King James Version of the relative passage
+</em><hr/><div class="container">
+<table id="sermonstable" class="display" border="1">
+<thead>
+<tr>
+<th class="sorting ui-state-default sorting_asc" rowspan="1" colspan="1" style="width: 463px;">
+<div class="DataTables_sort_wrapper">
+Date
+<span class="DataTables_sort_icon css_right ui-icon ui-icon-triangle-1-n"></span>
+</div></th>
+<th class="sorting ui-state-default sorting_asc" rowspan="1" colspan="1" style="width: 463px;">
+<div class="DataTables_sort_wrapper">
+Title
+<span class="DataTables_sort_icon css_right ui-icon ui-icon-triangle-1-n"></span>
+</div></th>
+<th class="sorting ui-state-default sorting_asc" rowspan="1" colspan="1" style="width: 463px;">
+<div class="DataTables_sort_wrapper">
+Passage
+<span class="DataTables_sort_icon css_right ui-icon ui-icon-triangle-1-n"></span>
+</div></th>
+
+</tr></thead><tbody>
+
+
         {% for tmprow in sermons %}
             <tr>
-                <td>{{tmprow.title}}</td>
-                <td>{{tmprow.book}}</td>
-                <td>{{tmprow.link}}</td>
                 <td>{{tmprow.sermondate}}</td>
+                <td>{{tmprow.title}}</td>
+		{% if tmprow.href %} 
+                <td><a href="{{tmprow.href}}" target="_blank">{{tmprow.book}}</a></td>
+		{% else %}
+                <td>{{tmprow.book}}</td>
+		{% endif %}
             </tr>
         {% endfor %}
         </table>
