@@ -56,8 +56,8 @@ Passage
 
         {% for tmprow in sermons %}
             <tr>
-                <td>{{tmprow.sermondate}}</td>
-                <td>{{tmprow.title}}</td>
+                <td><a href="{{tmprow.link}}" target="_blank">{{tmprow.sermondate}}</a></td>
+                <td><a href="{{tmprow.link}}" target="_blank">{{tmprow.title}}</a></td>
 		{% if tmprow.href %} 
                 <td><a href="{{tmprow.href}}" target="_blank">{{tmprow.book}}</a></td>
 		{% else %}
