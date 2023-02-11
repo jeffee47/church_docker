@@ -56,7 +56,7 @@ def get_sermons_data():
 			'title' : tmp[1],
 			'book' : tmp[2],
 			'summary' : tmp[3],
-			'link' : tmp[4],
+			'link' : "/" + os.path.basename(tmp[4]),
 			'sermondate' : tmp[5],
 			'href' : href,
                 }
